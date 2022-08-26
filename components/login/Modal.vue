@@ -35,7 +35,7 @@
       </ul>
       <h3>使用 HiSKIO ID 登入</h3>
       <div>
-        <form action="">
+        <form @submit.prevent="handleLogin">
           <div>
             <FontAwesomeIcon icon="fa-solid fa-circle-user" />
             <input type="text" />
@@ -47,9 +47,9 @@
           <label>
             <input type="checkbox" />
             <p>
-              登入註冊即代表您同意<a href="">使用者</a>及<a href=""
-                >隱私權政策</a
-              >
+              登入註冊即代表您同意<a href="">使用者</a>及<a href="">
+                隱私權政策
+              </a>
             </p>
           </label>
           <button type="submit">登入</button>
@@ -63,5 +63,25 @@
 <script>
 export default {
   name: 'LoginModal',
+  data() {
+    return {
+      loginBody: {
+        account: '1999JD',
+        password: 'people96811',
+        confirm: true,
+      },
+    }
+  },
+  methods: {
+    async handleLogin() {
+      // await console.log(this.$cookies)
+      const res = await this.$api.postLogin(this.loginBody)
+      if (res.err) return alert('登入失敗')
+      const data = res.data
+      this.$store.commit('setAccessToken', data.access_token)
+      this.$cookies.set('access_token', data.access_token)
+      this.$store.dispatch('handleGetUser')
+    },
+  },
 }
 </script>
