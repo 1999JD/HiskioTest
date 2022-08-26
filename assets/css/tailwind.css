@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: PingFang TC, 微軟正黑體;
+  }
+  img {
+    @apply w-full h-auto;
+  }
+}
+
+@layer components {
+  .test {
+    @apply md:text-left;
+  }
+}
