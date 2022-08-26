@@ -1,5 +1,5 @@
 <template>
-  <header class="fixed top-0 inset-x-0 py-2 shadow-sm whitespace-nowrap">
+  <header class="fixed top-0 inset-x-0 py-2 shadow-sm whitespace-nowrap bg-white">
     <div class="flex items-center gap-x-6 mx-auto px-6 md:px-7 xl:px-8">
       <h1 class="">
         <a href="/">
@@ -71,14 +71,17 @@
           <button class="w-16 py-1.5 border rounded">註冊</button>
         </div>
       </div>
-      <div v-else class="flex gap-x-5">
-        <NuxtLink to="/">任務版</NuxtLink>
-        <NuxtLink to="/">我的學習</NuxtLink>
-        <NuxtLink to="/" class="w-5">
+      <div v-else class="flex items-center gap-x-5">
+        <NuxtLink class="hidden md:inline" to="/">任務版</NuxtLink>
+        <NuxtLink class="hidden md:inline" to="/">我的學習</NuxtLink>
+        <NuxtLink to="/" class="w-5 text-xl md:text-base">
           <span class="sr-only">購物車</span>
           <FontAwesomeIcon icon="fa-solid fa-cart-shopping" />
         </NuxtLink>
-        <NuxtLink to="/">
+        <NuxtLink to="/" class="hidden md:block">
+          <div class="w-8 h-8 rounded-full bg-gray-200">
+            <img src="" alt="" />
+          </div>
           <span class="sr-only">大頭貼/會員</span>
         </NuxtLink>
       </div>
