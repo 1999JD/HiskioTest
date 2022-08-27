@@ -7,7 +7,7 @@ function apiFunction(axios) {
       return axios.get(`/me`)
     },
     getFundraising() {
-      return axios.get(`/cources/fundraising`)
+      return axios.get(`/courses/fundraising`)
     },
     deleteCarts(body) {
       return axios.delete(`/carts`, body)

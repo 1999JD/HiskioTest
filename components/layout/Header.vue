@@ -86,11 +86,12 @@
           <FontAwesomeIcon icon="fa-solid fa-cart-shopping" />
         </NuxtLink>
         <NuxtLink to="/" class="hidden md:block">
-          <div class="w-8 h-8 rounded-full bg-gray-200">
-            <img src="" alt="" />
+          <div class="w-8 h-8 rounded-full overflow-hidden bg-gray-200">
+            <img :src="$store.state.user.avatar" alt="" />
           </div>
           <span class="sr-only">大頭貼/會員</span>
         </NuxtLink>
+        <!-- {{ $store.state }} -->
       </div>
 
       <!-- mobile search open -->

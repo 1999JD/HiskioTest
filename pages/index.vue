@@ -14,22 +14,28 @@
           <p><span class="sr-only">刪除</span></p>
         </div>
         <ul class="bg-white rounded-b-2lg text-center">
-          <li class="grid--custom px-3 py-4">
-            <div class="text-left">
-              <div>
-                <img src="" alt="" />
+          <li
+            v-for="item in $store.state.carts"
+            :key="item.id"
+            class="grid--custom px-3 py-4"
+          >
+            <div class="flex text-left">
+              <div class="w-32">
+                <img :src="item.image" alt="" />
               </div>
-              <h4>GA4 實戰佈局｜從零基礎部署到商業分析</h4>
+              <h4>{{ item.name }}</h4>
             </div>
             <div>NT$2,800</div>
             <div>
-              -NT$810
-              <p>折扣優惠</p>
+              <div v-if="item.coupon">
+                -NT${{ item.coupon }}
+                <p>折扣優惠</p>
+              </div>
             </div>
-            <div>NT$1,990</div>
-            <div>
+            <div>NT${{ item.total }}</div>
+            <button @click="handleRemoveItem(item.id)">
               <FontAwesomeIcon icon="fa-solid fa-trash" />
-            </div>
+            </button>
           </li>
         </ul>
       </section>
@@ -57,20 +63,26 @@
     <section class="pt-10 pb-14 bg-gray-200">
       <div class="max-w-container px-4">
         <h2 class="mb-5 text-2xl">其他人也買的課程</h2>
-        <ul class="grid md:grid-cols-2 lg:grid-cols-4 gap-x-4">
-          <li class="relative rounded-2lg overflow-hidden bg-white">
+        <ul class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <li
+            v-for="cource in fundraisingCources"
+            :key="cource.id"
+            class="relative rounded-2lg overflow-hidden bg-white"
+          >
             <div class="grid grid-cols-3 lg:block p-3.5 lg:p-0">
               <div class="course__img-wrap">
-                <img
-                  class="absolute top-0 inset-x-0"
-                  src="https://fakeimg.pl/320x180/"
-                />
+                <div class="absolute z-10">
+                  <button @click="handleAddItem(cource.id)">購物車</button>
+                </div>
+                <img class="absolute top-0 inset-x-0" :src="cource.image" />
               </div>
               <div class="col-span-2 flex flex-col">
                 <h3 class="order-2 md:order-1 mx-3 mb-1.5 text-sm lg:text-lg">
-                  精通 VueJS 前端開發完全指南
+                  {{ cource.title }}
                 </h3>
-                <p class="order-1 md:order-2 mx-3 mb-2.5 text-sm">姚偉揚</p>
+                <p class="order-1 md:order-2 mx-3 mb-2.5 text-sm">
+                  {{ cource.lecturers[0].username }}
+                </p>
               </div>
               <div
                 class="
@@ -86,11 +98,11 @@
               >
                 <div>
                   <FontAwesomeIcon icon="fa-solid fa-user-large" />
-                  <span>1387</span>
+                  <span>{{ cource.students }}</span>
                 </div>
                 <div>
                   <FontAwesomeIcon icon="fa-solid fa-star" />
-                  <span>5.0</span>
+                  <span>{{ cource.feedback_score }}</span>
                 </div>
                 <button class="absolute top-3 right-3 lg:static ml-auto border">
                   立即上課
@@ -106,7 +118,7 @@
                   lg:text-xl
                 "
               >
-                NT$3,200
+                NT${{ cource.price }}
               </p>
             </div>
           </li>
@@ -119,6 +131,46 @@
 <script>
 export default {
   name: 'IndexPage',
+  async asyncData({ $api }) {
+    const res = await $api.getFundraising()
+    if (res.err) return { fundraisingCources: [] }
+    const data = await res.data
+
+    return {
+      fundraisingCources: data,
+    }
+  },
+  methods: {
+    async handleAddItem(itemId) {
+      const body = {
+        items: [
+          {
+            id: itemId,
+            coupon: '',
+          },
+        ],
+        coupons: [],
+      }
+      const res = await this.$api.postCarts(body)
+      if (res.err) return alert('加入購物車失敗')
+      const data = await res.data.data
+      this.$store.commit('setCarts', data)
+    },
+    async handleRemoveItem(itemId) {
+      const body = {
+        items: [
+          {
+            id: itemId,
+            coupon: '',
+          },
+        ],
+        coupons: [],
+      }
+      const res = await this.$api.deleteCarts(body)
+      if (res.err) return alert('刪除品項失敗')
+      this.$store.commit('removeCartsItem', itemId)
+    },
+  },
 }
 </script>
 
