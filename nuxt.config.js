@@ -23,7 +23,13 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     { src: '~/plugins/fontawesome.js', ssr: true }, // only on client side
+    { src: '~/plugins/api.js', ssr: true }, // only on client side
   ],
+
+  axios: {
+    baseURL: 'https://api.hiskio.com/v2',
+    proxy: false,
+  },
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -39,7 +45,16 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [],
+  modules: [
+    '@nuxtjs/axios',
+    '@nuxtjs/proxy',
+    'cookie-universal-nuxt',
+  ],
+  ssr: true,
+  target: 'server',
+  proxy: [
+    'https://api/hiskio.com/v2'
+  ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
