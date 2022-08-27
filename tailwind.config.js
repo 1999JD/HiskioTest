@@ -20,6 +20,12 @@ module.exports = {
       fontFamily: {
         'primary': ['Noto Sans TC', '微軟正黑體', 'sans-serif']
       },
+      maxWidth: {
+        'container': '1200px'
+      },
+      borderRadius: {
+        '2lg': '10px'
+      }
     },
   },
   variants: {
