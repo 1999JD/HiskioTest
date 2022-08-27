@@ -1,5 +1,7 @@
 <template>
-  <header class="fixed top-0 inset-x-0 py-2 shadow-sm whitespace-nowrap bg-white">
+  <header
+    class="fixed top-0 inset-x-0 py-2 shadow-sm whitespace-nowrap bg-white"
+  >
     <div class="flex items-center gap-x-6 mx-auto px-6 md:px-7 xl:px-8">
       <h1 class="">
         <a href="/">
@@ -67,7 +69,12 @@
           <span class="sr-only">購物車</span>
         </NuxtLink>
         <div class="hidden md:flex gap-x-2.5 text-sm">
-          <button class="w-16 py-1.5 border rounded">登入</button>
+          <button
+            class="w-16 py-1.5 border rounded"
+            @click="$emit('onLoginModalOpen', true)"
+          >
+            登入
+          </button>
           <button class="w-16 py-1.5 border rounded">註冊</button>
         </div>
       </div>

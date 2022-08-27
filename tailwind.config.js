@@ -20,8 +20,14 @@ module.exports = {
       fontFamily: {
         'primary': ['Noto Sans TC', '微軟正黑體', 'sans-serif']
       },
+      width: {
+        'fit': 'fit-content'
+      },
       maxWidth: {
         'container': '1200px'
+      },
+      maxHeight: {
+        '96vh': '96vh'
       },
       borderRadius: {
         '2lg': '10px'
