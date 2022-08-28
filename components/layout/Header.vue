@@ -101,13 +101,15 @@
           <span class="sr-only">購物車</span>
           <FontAwesomeIcon icon="fa-solid fa-cart-shopping" />
         </NuxtLink>
-        <NuxtLink to="/" class="hidden md:block">
+        <button
+          class="hidden md:block"
+          @click.prevent="$emit('onDesktopMemberAsideOpen', true)"
+        >
           <div class="w-8 h-8 rounded-full overflow-hidden bg-gray-200">
             <img :src="$store.state.user.avatar" alt="" />
           </div>
           <span class="sr-only">大頭貼/會員</span>
-        </NuxtLink>
-        <!-- {{ $store.state }} -->
+        </button>
       </div>
 
       <!-- mobile search open -->

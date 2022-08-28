@@ -13,7 +13,9 @@ function apiFunction(axios) {
       return axios.delete(`/carts`, body)
     },
     postCarts(body) {
-      return axios.post(`/carts`, body)
+      return axios.post(`/carts`, body, {
+        headers: { common: { Accept: 'text/html' } }
+      })
     },
   }
 }
@@ -31,7 +33,6 @@ export default ({ $axios, store, $cookies }, inject) => {
     return res
   })
   $axios.onError(err => {
-    console.log(err)
     const code = parseInt(err.response && err.response.status)
     return Promise.resolve({ err: true, code, })
   })

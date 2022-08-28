@@ -32,8 +32,9 @@
       href="javascript:void(0)"
       role="button"
       class="block w-full py-4 px-3.5"
+      @click="logout"
     >
-      登入
+      登出
     </a>
   </nav>
 </template>
@@ -45,6 +46,12 @@ export default {
     isOpen: {
       type: Boolean,
       default: false,
+    },
+  },
+  methods: {
+    logout() {
+      this.$cookies.remove('access_token')
+      window.location.reload(true)
     },
   },
 }
@@ -59,7 +66,7 @@ export default {
   @apply block;
 }
 
-@screen md {
+@screen lg {
   .nav--mobile {
     @apply hidden;
   }

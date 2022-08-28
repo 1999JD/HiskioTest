@@ -49,6 +49,8 @@
               class="absolute inset-y-0 left-4 m-auto"
             />
             <input
+              v-model="loginBody.account"
+              autocomplete="username"
               type="text"
               class="w-full py-2.5 pl-12 pr-2.5 rounded bg-gray-50"
               placeholder="請輸入 HiSKIO ID"
@@ -60,13 +62,15 @@
               class="absolute inset-y-0 left-4 m-auto"
             />
             <input
-              type="text"
+              v-model="loginBody.password"
+              type="password"
+              autocomplete="current-password"
               class="w-full py-2.5 pl-12 pr-2.5 rounded bg-gray-50"
               placeholder="請輸入登入密碼"
             />
           </div>
           <label class="flex gap-x-1.5 mb-7">
-            <input type="checkbox" />
+            <input v-model="loginBody.confirm" type="checkbox" />
             <p class="text-gray-100">
               登入註冊即代表您同意<a href="">使用者</a>及<a href="">
                 隱私權政策
@@ -102,9 +106,9 @@ export default {
   data() {
     return {
       loginBody: {
-        account: '1999JD',
-        password: 'people96811',
-        confirm: true,
+        account: '',
+        password: '',
+        confirm: false,
       },
       thirdParties: [
         {
@@ -135,13 +139,18 @@ export default {
       this.$emit('onClose', false)
     },
     async handleLogin() {
-      // await console.log(this.$cookies)
+      if (
+        !this.loginBody.confirm ||
+        !this.loginBody.account ||
+        !this.loginBody.password
+      )
+        return alert('請確認輸入資料')
       const res = await this.$api.postLogin(this.loginBody)
       if (res.err) return alert('登入失敗')
       const data = res.data
       this.$store.commit('setAccessToken', data.access_token)
       this.$cookies.set('access_token', data.access_token)
-      this.$store.dispatch('handleGetUser')
+      window.location.reload(true)
     },
   },
 }

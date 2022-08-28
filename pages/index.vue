@@ -15,6 +15,7 @@
             p-3
             border-b
             rounded-t-2lg
+            shadow-md
             bg-white
             text-center
           "
@@ -25,21 +26,21 @@
           <p>結帳金額</p>
           <p><span class="sr-only">刪除</span></p>
         </div>
-        <ul class="bg-white rounded-b-2lg text-center">
+        <ul class="bg-white rounded-b-2lg shadow-md text-center">
           <li
             v-for="item in $store.state.carts"
             :key="item.id"
             class="grid--custom grid px-3 py-4"
           >
-            <div class="flex text-left">
-              <div class="w-32">
+            <div class="flex gap-x-4 text-left">
+              <div class="w-32 flex-shrink-0">
                 <img :src="item.image" alt="" />
               </div>
               <h4>{{ item.name }}</h4>
             </div>
-            <div>NT$2,800</div>
+            <div>NT${{ item.subtotal }}</div>
             <div>
-              <div v-if="item.coupon">
+              <div v-if="item.coupon.length">
                 -NT${{ item.coupon }}
                 <p>折扣優惠</p>
               </div>
@@ -71,7 +72,30 @@
 
       <section class="col-span-12 lg:col-span-4 row-span-2">
         <h2 class="mb-5 text-xl lg:text-2xl">小計</h2>
-        <div class="h-96 rounded-2lg bg-white"></div>
+
+        <div class="rounded-2lg py-5 px-4 shadow-md bg-white">
+          <h3 class="mb-3 text-xl text-gray-100">輸入折扣代碼</h3>
+          <div class="flex gap-x-2 mb-5">
+            <input type="text" class="border w-full p-2 rounded" />
+            <button class="w-20 rounded text-red-500 bg-red-200">確定</button>
+          </div>
+          <a href="/" class="block mb-5 text-lg underline">
+            選擇抵用卷
+            <FontAwesomeIcon icon="fa-solid fa-arrow-right"></FontAwesomeIcon>
+          </a>
+          <div class="flex justify-between">
+            <p>金額</p>
+            <span> NT${{ sum }} </span>
+          </div>
+          <p class="text-3xl text-right">NT${{ sum }}</p>
+          <button class="w-full rounded mb-3 py-2 bg-red-500 text-white">
+            前往結帳
+          </button>
+          <p class="text-xs">
+            點擊上方按鈕即表示您已閱讀並同意
+            <a href="/" class="underline"> 「 HiSKIO購買與退費政策」 </a>
+          </p>
+        </div>
       </section>
 
       <section class="col-span-8 hidden lg:block">
@@ -211,8 +235,20 @@ export default {
       fundraisingCources: data,
     }
   },
+  computed: {
+    sum() {
+      const priceArray = this.$store.state.carts.map((item) => item.total)
+      return priceArray.length
+        ? priceArray.reduce((accumulator, current) => accumulator + current)
+        : 0
+    },
+  },
   methods: {
     async handleAddItem(itemId) {
+      const find = this.$store.state.carts.find(
+        (item) => Number(item.id) === Number(itemId)
+      )
+      if (find) return this.handleRemoveItem(itemId.toString())
       const body = {
         items: [
           {
@@ -239,6 +275,8 @@ export default {
       }
       const res = await this.$api.deleteCarts(body)
       if (res.err) return alert('刪除品項失敗')
+      console.log(res)
+
       this.$store.commit('removeCartsItem', itemId)
     },
   },
