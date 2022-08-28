@@ -275,8 +275,6 @@ export default {
       }
       const res = await this.$api.deleteCarts(body)
       if (res.err) return alert('刪除品項失敗')
-      console.log(res)
-
       this.$store.commit('removeCartsItem', itemId)
     },
   },

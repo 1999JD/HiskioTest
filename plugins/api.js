@@ -10,12 +10,15 @@ function apiFunction(axios) {
       return axios.get(`/courses/fundraising`)
     },
     deleteCarts(body) {
-      return axios.delete(`/carts`, body)
+      return axios.delete(`/carts`, {
+        headers: {
+          common: { Accept: 'text/html' }
+        },
+        data: body
+      })
     },
     postCarts(body) {
-      return axios.post(`/carts`, body, {
-        headers: { common: { Accept: 'text/html' } }
-      })
+      return axios.post(`/carts`, body)
     },
   }
 }
