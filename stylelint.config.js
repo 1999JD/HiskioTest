@@ -23,5 +23,6 @@ module.exports = {
     "declaration-block-trailing-semicolon": null,
     "no-descending-specificity": null,
     "selector-class-pattern": null,
+    "property-no-vendor-prefix": [true, { "ignoreProperties": ["display"] }]
   },
 }

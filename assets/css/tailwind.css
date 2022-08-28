@@ -4,10 +4,14 @@
 
 @layer base {
   body {
+    @apply text-gray-500;
     font-family: PingFang TC, 微軟正黑體;
   }
   img {
     @apply w-full h-auto;
+  }
+  input {
+    @apply focus:outline-none;
   }
 }
 

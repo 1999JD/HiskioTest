@@ -1,6 +1,6 @@
 <template>
   <header
-    class="fixed top-0 inset-x-0 py-2 shadow-sm whitespace-nowrap bg-white"
+    class="fixed z-30 top-0 inset-x-0 py-2 shadow-sm whitespace-nowrap bg-white"
   >
     <div class="flex items-center gap-x-6 mx-auto px-6 md:px-7 xl:px-8">
       <h1 class="">
@@ -22,7 +22,9 @@
           alt="徵才中"
         />
       </a>
-      <button class="hidden md:block"><SvgList /> 探索</button>
+      <button class="hidden md:block hover:text-primary">
+        <SvgList /> 探索
+      </button>
       <div class="relative md:flex-grow ml-auto md:ml-0">
         <form>
           <input
@@ -64,24 +66,38 @@
         class="flex items-center md:gap-x-6 xl:gap-x-7"
       >
         <NuxtLink to="/" class="hidden md:inline">企業方案</NuxtLink>
-        <NuxtLink to="/" class="text-xl md:text-base">
+        <NuxtLink to="/" class="text-gray-200 hover:text-gray-100 text-xl">
           <FontAwesomeIcon icon="fa-solid fa-cart-shopping" />
           <span class="sr-only">購物車</span>
         </NuxtLink>
         <div class="hidden md:flex gap-x-2.5 text-sm">
           <button
-            class="w-16 py-1.5 border rounded"
+            class="w-16 py-1.5 border border-primary rounded text-primary"
             @click="$emit('onLoginModalOpen', true)"
           >
             登入
           </button>
-          <button class="w-16 py-1.5 border rounded">註冊</button>
+          <button
+            class="
+              w-16
+              py-1.5
+              border border-primary
+              rounded
+              bg-primary
+              text-white
+            "
+          >
+            註冊
+          </button>
         </div>
       </div>
       <div v-else class="flex items-center gap-x-5">
         <NuxtLink class="hidden md:inline" to="/">任務版</NuxtLink>
         <NuxtLink class="hidden md:inline" to="/">我的學習</NuxtLink>
-        <NuxtLink to="/" class="w-5 text-xl md:text-base">
+        <NuxtLink
+          to="/"
+          class="w-5 text-gray-200 hover:text-gray-100 text-xl md:text-base"
+        >
           <span class="sr-only">購物車</span>
           <FontAwesomeIcon icon="fa-solid fa-cart-shopping" />
         </NuxtLink>
@@ -113,7 +129,10 @@
       </div>
 
       <!-- mobile toggle -->
-      <button class="block md:hidden text-xl md:text-base">
+      <button
+        class="block md:hidden text-xl md:text-base"
+        @click="$emit('onMobileAsideOpen')"
+      >
         <span class="sr-only"></span>
         <FontAwesomeIcon icon="fa-solid fa-bars" />
       </button>

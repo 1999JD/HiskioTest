@@ -1,11 +1,23 @@
 <template>
-  <main class="bg-gray-100 pt-20">
+  <main class="bg-gray-50 pt-5 lg:pt-20">
     <!-- 6xl 1152 -->
     <div class="grid grid-cols-12 gap-x-4 max-w-container px-4 pb-14">
-      <section class="col-span-12 lg:col-span-8 max-w-3xl lg:max-w-full mb-16">
-        <h2 class="mb-5 text-2xl">購物車</h2>
+      <section
+        class="col-span-12 lg:col-span-8 relative max-w-3xl lg:max-w-full mb-16"
+      >
+        <h2 class="mb-5 text-xl lg:text-2xl">購物車</h2>
         <div
-          class="grid--custom p-3 border-b rounded-t-2lg bg-white text-center"
+          v-if="$store.state.carts.length"
+          class="
+            hidden
+            md:grid
+            grid--custom
+            p-3
+            border-b
+            rounded-t-2lg
+            bg-white
+            text-center
+          "
         >
           <p class="text-left">項目</p>
           <p>售價</p>
@@ -17,7 +29,7 @@
           <li
             v-for="item in $store.state.carts"
             :key="item.id"
-            class="grid--custom px-3 py-4"
+            class="grid--custom grid px-3 py-4"
           >
             <div class="flex text-left">
               <div class="w-32">
@@ -38,21 +50,38 @@
             </button>
           </li>
         </ul>
+        <div v-if="!$store.state.carts.length" class="w-96 mx-auto">
+          <img src="~/assets/image/emptyCart.png" alt="您的購物車沒有東西" />
+        </div>
+        <a
+          href="javascript:void(0)"
+          class="
+            block
+            lg:hidden
+            absolute
+            top-2
+            right-0
+            text-xs text-yellow
+            underline
+          "
+        >
+          我收藏的課程
+        </a>
       </section>
 
       <section class="col-span-12 lg:col-span-4 row-span-2">
-        <h2 class="mb-5 text-2xl">小計</h2>
+        <h2 class="mb-5 text-xl lg:text-2xl">小計</h2>
         <div class="h-96 rounded-2lg bg-white"></div>
       </section>
 
-      <section class="col-span-8 hidden md:block">
-        <h2 class="mb-5 text-2xl">我收藏的課程</h2>
-        <h3 class="mb-14 text-xl">單堂課程</h3>
+      <section class="col-span-8 hidden lg:block">
+        <h2 class="mb-5 text-xl lg:text-2xl">我收藏的課程</h2>
+        <h3 class="mb-14 text-xl text-gray-100">單堂課程</h3>
         <div class="mb-10">
           <SvgNoList class="mx-auto" />
           <p class="text-center">你尚未收藏單堂課程</p>
         </div>
-        <h3 class="mb-14 text-xl">電子書</h3>
+        <h3 class="mb-14 text-xl text-gray-100">電子書</h3>
         <div class="mb-10">
           <SvgNoList class="mx-auto" />
           <p class="text-center">你尚未收藏電子書</p>
@@ -60,9 +89,9 @@
       </section>
     </div>
 
-    <section class="pt-10 pb-14 bg-gray-200">
+    <section class="pt-10 pb-14 bg-gray-300">
       <div class="max-w-container px-4">
-        <h2 class="mb-5 text-2xl">其他人也買的課程</h2>
+        <h2 class="mb-5 text-xl lg:text-2xl">其他人也買的課程</h2>
         <ul class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
           <li
             v-for="cource in fundraisingCources"
@@ -71,13 +100,44 @@
           >
             <div class="grid grid-cols-3 lg:block p-3.5 lg:p-0">
               <div class="course__img-wrap">
-                <div class="absolute z-10">
-                  <button @click="handleAddItem(cource.id)">購物車</button>
+                <div
+                  class="
+                    course__cart
+                    absolute
+                    inset-0
+                    z-10
+                    flex
+                    justify-end
+                    align-bottom
+                    p-4
+                    bg-gradient-to-b
+                    from-transparent
+                    to-black
+                  "
+                >
+                  <button
+                    class="self-end text-2xl text-white"
+                    @click="handleAddItem(cource.id)"
+                  >
+                    <FontAwesomeIcon icon="fa-solid fa-cart-shopping" />
+                    <span class="sr-only">購物車</span>
+                  </button>
                 </div>
                 <img class="absolute top-0 inset-x-0" :src="cource.image" />
               </div>
               <div class="col-span-2 flex flex-col">
-                <h3 class="order-2 md:order-1 mx-3 mb-1.5 text-sm lg:text-lg">
+                <h3
+                  class="
+                    order-2
+                    md:order-1
+                    lg:min-h-14
+                    mx-3
+                    mb-1.5
+                    text-sm
+                    lg:text-lg
+                    line-clamp-2
+                  "
+                >
                   {{ cource.title }}
                 </h3>
                 <p class="order-1 md:order-2 mx-3 mb-2.5 text-sm">
@@ -104,7 +164,18 @@
                   <FontAwesomeIcon icon="fa-solid fa-star" />
                   <span>{{ cource.feedback_score }}</span>
                 </div>
-                <button class="absolute top-3 right-3 lg:static ml-auto border">
+                <button
+                  class="
+                    absolute
+                    top-3
+                    right-3
+                    lg:static
+                    ml-auto
+                    border border-primary
+                    rounded
+                    text-primary
+                  "
+                >
                   立即上課
                 </button>
               </div>
@@ -176,8 +247,6 @@ export default {
 
 <style lang="postcss" scoped>
 .grid--custom {
-  @apply grid;
-
   grid-template-columns: 50% 16% 16% 16% 2%;
 }
 
@@ -191,5 +260,13 @@ export default {
   .course__img-wrap {
     @apply rounded-none;
   }
+}
+
+.course__cart {
+  @apply hidden;
+}
+
+.course__img-wrap:hover .course__cart {
+  @apply flex;
 }
 </style>

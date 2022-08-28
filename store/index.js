@@ -9,12 +9,12 @@ export const getters = {
 }
 export const actions = {
   async nuxtServerInit({ commit, dispatch }, { req }) {
-    if (req.headers.cookie) {
-      commit('setAccessToken', req.headers.cookie.replace('access_token=', ''))
-      commit('setIsLogin', true)
-      await dispatch('handleGetUser')
-      await dispatch('handleGetCarts')
-    }
+    // if (req.headers.cookie) {
+    //   commit('setAccessToken', req.headers.cookie.replace('access_token=', ''))
+    //   commit('setIsLogin', true)
+    //   await dispatch('handleGetUser')
+    //   await dispatch('handleGetCarts')
+    // }
   },
   async handleGetUser({ commit }) {
     const res = await this.$api.getMember()

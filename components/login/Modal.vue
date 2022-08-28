@@ -1,10 +1,11 @@
 <template>
   <div>
-    <div class="fixed inset-0 bg-gray-800"></div>
+    <div class="fixed z-40 inset-0 bg-black opacity-70"></div>
     <section
       class="
-        modal__bg
+        modal__bg modal__scroll
         fixed
+        z-50
         inset-0
         max-w-md max-h-96vh
         m-auto
@@ -19,9 +20,9 @@
       <button class="absolute top-5 right-6 text-xl" @click="handleClose">
         <FontAwesomeIcon icon="fa-solid fa-xmark" />
       </button>
-      <div class="flex mb-6 text-center text-3xl font-black">
-        <button class="flex-1 pt-5 pb-2">登入</button>
-        <button class="flex-1 pt-5 pb-2">註冊</button>
+      <div class="flex mb-6 text-center text-3xl">
+        <button class="flex-1 pt-5 pb-2 font-black text-primary">登入</button>
+        <button class="flex-1 pt-5 pb-2 font-black text-gray-200">註冊</button>
       </div>
       <ul class="mb-6">
         <li
@@ -33,7 +34,7 @@
             <div class="inline-block w-7 align-middle">
               <img :src="party.img" alt="" />
             </div>
-            <span class="inline-block w-36 text-left">
+            <span class="inline-block w-36 text-left text-gray-100">
               {{ party.text }}
             </span>
           </a>
@@ -66,16 +67,29 @@
           </div>
           <label class="flex gap-x-1.5 mb-7">
             <input type="checkbox" />
-            <p>
+            <p class="text-gray-100">
               登入註冊即代表您同意<a href="">使用者</a>及<a href="">
                 隱私權政策
               </a>
             </p>
           </label>
-          <button type="submit" class="block w-full mb-5 py-2 text-center">
+          <button
+            type="submit"
+            class="
+              block
+              w-full
+              mb-5
+              py-2
+              rounded
+              bg-primary
+              text-white text-center text-lg
+            "
+          >
             登入
           </button>
-          <button type="button" class="block w-fit mx-auto">忘記密碼</button>
+          <button type="button" class="block w-fit mx-auto text-lg">
+            忘記密碼
+          </button>
         </form>
       </div>
     </section>
@@ -132,3 +146,18 @@ export default {
   },
 }
 </script>
+
+<style lang="postcss" scoped>
+.modal__bg {
+  background-image: url('~/assets/image/login.png');
+  @apply bg-no-repeat bg-contain;
+}
+
+.modal__scroll::-webkit-scrollbar {
+  @apply w-2 bg-transparent;
+}
+
+.modal__scroll::-webkit-scrollbar-thumb {
+  @apply bg-gray-200 rounded-3xl;
+}
+</style>

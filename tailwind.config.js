@@ -23,6 +23,28 @@ module.exports = {
       width: {
         'fit': 'fit-content'
       },
+      minHeight: {
+        14: '3.5rem'
+      },
+      colors: {
+        primary: {
+          DEFAULT: '#178fac',
+          pale: '#eff5f8'
+        },
+        yellow: {
+          DEFAULT: '#ffa81d'
+        },
+        gray: {
+          50: '#fafafa',
+          100: '#8C8C8C',
+          200: '#D9D9D9',
+          300: '#f5f5f5',
+          500: '#595959',
+          700: '#434343'
+
+        },
+
+      },
       maxWidth: {
         'container': '1200px'
       },
@@ -37,7 +59,9 @@ module.exports = {
   variants: {
     backgroundColor: ['responsive', 'disabled', 'hover'],
     outline: ['active', 'focus'],
-    borderWidth: ['focus'],
     borderColor: ['hover', 'active', 'focus'],
   },
+  plugins: [
+    require('@tailwindcss/line-clamp'),
+  ],
 }
